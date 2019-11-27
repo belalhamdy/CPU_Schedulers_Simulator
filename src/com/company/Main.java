@@ -14,16 +14,16 @@ public class Main {
             int c = in.nextInt();
             switch (c) {
                 case 1:
-                    simulator = new ShortestJobFirstScheduling();
+                    simulator = new ShortestJobFirstScheduling(System.in);
                     break;
                 case 2:
-                    simulator = new ShortestRemainingTimeFirstScheduling();
+                    simulator = new ShortestRemainingTimeFirstScheduling(System.in);
                     break;
                 case 3:
-                    simulator = new PriorityScheduling();
+                    simulator = new PriorityScheduling(System.in);
                     break;
                 case 4:
-                    simulator = new AGScheduling();
+                    simulator = new AGScheduling(System.in);
                     break;
                 default:
                     break loop;

@@ -1,8 +1,13 @@
 package com.company;
 
+import java.io.InputStream;
 import java.util.List;
 
 public class ShortestJobFirstScheduling extends ProcessScheduling {
+
+    ShortestJobFirstScheduling(InputStream inputStream) {
+        super(inputStream);
+    }
 
     @Override
     protected List<Process> EnterData() {
