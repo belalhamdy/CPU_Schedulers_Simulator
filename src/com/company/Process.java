@@ -2,27 +2,35 @@ package com.company;
 
 import javafx.util.Pair;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 // Times inserted as integer in microseconds
 // Depending on type of simulation choose constructor
 public class Process {
+    String Name;
     int ArrivalTime, BurstTime,RemainingTime,Priority, Quantum;
+    Color color;
     List<Pair<Integer, Integer>> WorkingTimes;
 
-    Process(int ArrivalTime, int BurstTime, int Priority,int Quantum) {
+    Process(String Name,int ArrivalTime, int BurstTime, int Priority,int Quantum,Color color) {
+        this.Name = Name;
         this.ArrivalTime = ArrivalTime;
         this.BurstTime = BurstTime;
         this.Priority = Priority;
         this.Quantum = Quantum;
+        this.color = color;
         this.WorkingTimes = new ArrayList<>();
     }
-    Process (int ArrivalTime, int BurstTime){
-        this(ArrivalTime,BurstTime,-1,-1);
+    Process (String Name, int ArrivalTime, int BurstTime){
+        this(Name,ArrivalTime,BurstTime,-1,-1,Color.BLACK);
     }
-    Process (int ArrivalTime, int BurstTime,int Priority){
-        this(ArrivalTime,BurstTime,Priority,-1);
+    Process (String Name, int ArrivalTime, int BurstTime,int Priority){
+        this(Name,ArrivalTime,BurstTime,Priority,-1,Color.BLACK);
+    }
+    Process (String Name, int ArrivalTime, int BurstTime,int Priority,int Quantum){
+        this(Name,ArrivalTime,BurstTime,Priority,Quantum,Color.BLACK);
     }
 
     public List<Pair<Integer, Integer>> getWorkingTimes() {
