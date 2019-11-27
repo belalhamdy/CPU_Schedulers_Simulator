@@ -46,4 +46,8 @@ public class Process {
         int endTime = WorkingTimes.get(WorkingTimes.size()-1).getValue(); // gets the end of last working time
         return (endTime-ArrivalTime-BurstTime);
     }
+    public int getTurnaroundTime(){
+        // @TODO: fill the function with proper equation
+        return 0;
+    }
 }
