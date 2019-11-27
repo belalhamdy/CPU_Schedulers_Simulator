@@ -4,12 +4,12 @@ import java.util.List;
 
 public class AGScheduling extends ProcessScheduling {
     @Override
-    List<Process> EnterData() {
+    protected List<Process> EnterData() {
         return null;
     }
 
     @Override
-    List<Process> Simulate(List<Process> Queue) {
+    protected List<Process> Simulate(List<Process> Queue) {
         return null;
     }
 }
