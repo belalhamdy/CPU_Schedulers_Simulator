@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ProcessScheduling {
-    List<Process> Queue;
     InputStream inputStream;
 
     ProcessScheduling(InputStream inputStream) {
