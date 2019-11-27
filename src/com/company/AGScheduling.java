@@ -17,7 +17,7 @@ public class AGScheduling extends ProcessScheduling {
     }
 
     @Override
-    protected List<Process> Simulate() {
+    public List<Process> Simulate() {
         return null;
     }
 }

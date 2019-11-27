@@ -18,7 +18,7 @@ public class ShortestJobFirstScheduling extends ProcessScheduling {
     }
 
     @Override
-    protected List<Process> Simulate() {
+    public List<Process> Simulate() {
         return null;
     }
 }

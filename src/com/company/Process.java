@@ -6,15 +6,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 // Times inserted as integer in microseconds
+// Depending on type of simulation choose constructor
 public class Process {
-    int ArrivalTime, BurstTime,RemainingTime,Priority;
+    int ArrivalTime, BurstTime,RemainingTime,Priority, Quantum;
     List<Pair<Integer, Integer>> WorkingTimes;
 
-    Process(int ArrivalTime, int BurstTime, int Priority) {
+    Process(int ArrivalTime, int BurstTime, int Priority,int Quantum) {
         this.ArrivalTime = ArrivalTime;
         this.BurstTime = BurstTime;
-        this.WorkingTimes = new ArrayList<>();
         this.Priority = Priority;
+        this.Quantum = Quantum;
+        this.WorkingTimes = new ArrayList<>();
+    }
+    Process (int ArrivalTime, int BurstTime){
+        this(ArrivalTime,BurstTime,-1,-1);
+    }
+    Process (int ArrivalTime, int BurstTime,int Priority){
+        this(ArrivalTime,BurstTime,Priority,-1);
     }
 
     public List<Pair<Integer, Integer>> getWorkingTimes() {
