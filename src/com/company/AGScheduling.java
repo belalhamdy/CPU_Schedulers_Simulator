@@ -7,6 +7,9 @@ public class AGScheduling extends ProcessScheduling {
     AGScheduling(InputStream inputStream) {
         super(inputStream);
     }
+    AGScheduling(List<Process> data) {
+        super(data);
+    }
 
     @Override
     protected List<Process> EnterData() {
@@ -14,7 +17,7 @@ public class AGScheduling extends ProcessScheduling {
     }
 
     @Override
-    protected List<Process> Simulate(List<Process> Queue) {
+    protected List<Process> Simulate() {
         return null;
     }
 }

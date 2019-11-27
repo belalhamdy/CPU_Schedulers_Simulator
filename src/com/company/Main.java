@@ -28,7 +28,7 @@ public class Main {
                 default:
                     break loop;
             }
-            Result = simulator.getSimulationResults();
+            Result = simulator.Simulate();
             ProcessScheduling.PrintProcessList(Result);
            System.out.println("-----------------------------------------------");
         }

@@ -8,6 +8,9 @@ public class ShortestJobFirstScheduling extends ProcessScheduling {
     ShortestJobFirstScheduling(InputStream inputStream) {
         super(inputStream);
     }
+    ShortestJobFirstScheduling(List<Process> data){
+        super(data);
+    }
 
     @Override
     protected List<Process> EnterData() {
@@ -15,7 +18,7 @@ public class ShortestJobFirstScheduling extends ProcessScheduling {
     }
 
     @Override
-    protected List<Process> Simulate(List<Process> Queue) {
+    protected List<Process> Simulate() {
         return null;
     }
 }
