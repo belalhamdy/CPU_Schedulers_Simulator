@@ -3,12 +3,14 @@ package com.company;
 import java.util.List;
 
 public class ShortestJobFirstScheduling extends ProcessScheduling {
-    ShortestJobFirstScheduling(List<Process> Queue) {
-        super(Queue);
+
+    @Override
+    List<Process> EnterData() {
+        return null;
     }
 
     @Override
-    List<Process> Simulate() {
+    List<Process> Simulate(List<Process> Queue) {
         return null;
     }
 }
