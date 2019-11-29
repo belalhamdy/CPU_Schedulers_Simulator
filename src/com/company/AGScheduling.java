@@ -12,8 +12,8 @@ public class AGScheduling extends ProcessScheduling {
     }
 
     @Override
-    protected List<Process> EnterData() {
-        return null;
+    void EnterData() {
+
     }
 
     @Override

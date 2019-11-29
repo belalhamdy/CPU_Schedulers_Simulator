@@ -28,8 +28,12 @@ public class Main {
                 default:
                     break loop;
             }
-            Result = simulator.Simulate();
-            ProcessScheduling.PrintProcessList(Result);
+           try {
+               Result = simulator.Simulate();
+               ProcessScheduling.PrintProcessList(Result);
+           } catch (Exception e) {
+               System.out.println(e.getMessage());
+           }
            System.out.println("-----------------------------------------------");
         }
         System.out.println("Program Ended");

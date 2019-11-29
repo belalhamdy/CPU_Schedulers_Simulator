@@ -13,11 +13,6 @@ public class ShortestRemainingTimeFirstScheduling extends ProcessScheduling {
     }
 
     @Override
-    protected List<Process> EnterData() {
-        return null;
-    }
-
-    @Override
     public List<Process> Simulate() {
         return null;
     }
