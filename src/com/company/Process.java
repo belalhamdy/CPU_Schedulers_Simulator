@@ -5,12 +5,14 @@ import javafx.util.Pair;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 // Times inserted as integer in microseconds
 // Depending on type of simulation choose constructor
 public class Process {
     String Name;
-    int ArrivalTime, BurstTime, RemainingTime, Priority, Quantum, id;
+    int ArrivalTime, BurstTime, RemainingTime, Priority, Quantum,tempQuantum, AGFacor,id;
+    List<Pair<Integer,Integer>> QuantumHistory;
     Color color;
     List<Pair<Integer, Integer>> WorkingTimes;
     private static int LastPID = 0;
@@ -21,6 +23,7 @@ public class Process {
         this.BurstTime = BurstTime;
         this.Priority = Priority;
         this.Quantum = Quantum;
+        this.tempQuantum = Quantum;
         this.color = color;
         WorkingTimes = new ArrayList<>();
         RemainingTime = BurstTime;
@@ -43,6 +46,9 @@ public class Process {
 
     Process(String Name, int ArrivalTime, int BurstTime, int Priority, int Quantum) {
         this(Name, ArrivalTime, BurstTime, Priority, Quantum, Color.BLACK);
+        AGFacor = ArrivalTime + BurstTime + Priority;
+        QuantumHistory = new ArrayList<>();
+        QuantumHistory.add(new Pair<>(0,Quantum));
     }
 
     public List<Pair<Integer, Integer>> getWorkingTimes() {
@@ -75,5 +81,16 @@ public class Process {
     int getStartTime(){
         if (RemainingTime == BurstTime) return Integer.MIN_VALUE;
         return (WorkingTimes.get(0).getKey());
+    }
+    public void UpdateQuantum (int start,int end) throws Exception {
+        int usedQuantum = end - start;
+        //if (QuantumHistory == null || usedQuantum>Quantum) throw new Exception("INVALID" + Quantum + " " + usedQuantum);
+        if (Quantum == usedQuantum) Quantum += (int) Math.ceil(0.1*(double)Quantum);
+        else Quantum += (Quantum - usedQuantum);
+        Quantum = Math.max(0, Quantum);
+        QuantumHistory.add(new Pair<>(end,Quantum));
+    }
+    public void UpdateQuantum() throws Exception{
+        UpdateQuantum(WorkingTimes.get(0).getKey(),WorkingTimes.get(WorkingTimes.size() - 1).getValue());
     }
 }
