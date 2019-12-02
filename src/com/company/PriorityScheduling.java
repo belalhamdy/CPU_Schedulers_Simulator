@@ -18,6 +18,13 @@ public class PriorityScheduling extends ProcessScheduling {
     @Override
      void EnterData() {
         Queue = new ArrayList<>();
+        /*Queue.add(new Process("STARVING_2",0,7,5));
+        Queue.add(new Process("1",0,11,2));
+        Queue.add(new Process("2",5,28,0));
+        Queue.add(new Process("3",12,2,3));
+        Queue.add(new Process("4",2,10,1));
+        Queue.add(new Process("STARVING_1",9,16,4));
+        Queue.add(new Process("6",60,16,2));*/
         Scanner in = new Scanner(inputStream);
         System.out.print("Enter number of processes: ");
         int n = in.nextInt();
@@ -48,12 +55,16 @@ public class PriorityScheduling extends ProcessScheduling {
             currentTime = Math.max(current.ArrivalTime,currentTime); // update the time to be the time of start of the next process
             current.AddWorkingTime(currentTime,currentTime+current.BurstTime);
             currentTime += current.BurstTime;
-            UpdatePriorities();
+            UpdatePriorities(currentTime);
         }
         if (current != null) finished.add(current);
         return finished;
     }
-    void UpdatePriorities(){
-        for (Process curr : Queue) curr.Priority+=StarvationSolver;
+    void UpdatePriorities(int currentTime){
+        int MIN_PRIORITY = 0;
+        for (Process curr : Queue){
+            if (curr.ArrivalTime > currentTime) return;
+            curr.Priority= Math.max(curr.Priority-StarvationSolver,MIN_PRIORITY);
+        }
     }
 }

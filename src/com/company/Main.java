@@ -30,9 +30,11 @@ public class Main {
             }
            try {
                Result = simulator.Simulate();
-               ProcessScheduling.PrintProcessList(Result);
+               simulator.PrintProcessList(Result);
+
            } catch (Exception e) {
                System.out.println(e.getMessage());
+               e.printStackTrace();
            }
            System.out.println("-----------------------------------------------");
         }

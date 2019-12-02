@@ -33,6 +33,13 @@ public abstract class ProcessScheduling {
     // Default data input for shortest job first and shortest remaining time first
      void EnterData(){
          Queue = new ArrayList<>();
+         Queue.add(new Process("1",0,8));
+         Queue.add(new Process("2",1,4));
+         Queue.add(new Process("3",2,2));
+         Queue.add(new Process("4",3,1));
+         Queue.add(new Process("5",4,3));
+         Queue.add(new Process("6",5,2));
+         /*
          Scanner in = new Scanner(inputStream);
          System.out.print("Enter number of processes: ");
          int n = in.nextInt();
@@ -45,12 +52,38 @@ public abstract class ProcessScheduling {
              int burst = in.nextInt();
              Queue.add(new Process(Name, arrival, burst));
              System.out.println("Process " + i + " is added successfully\n");
-         }
+         }*/
      }
 
     public abstract List<Process> Simulate() throws Exception; // should return list of process each process contains list of working times
-    public static void PrintProcessList(List<Process> data) {
+    public void PrintProcessList(List<Process> data) {
         for (Process curr : data) System.out.println(curr);
+        System.out.println("Average waiting time : " + getAverageWaitingTime(data));
+        System.out.println("Average turnaround time : " + getAverageTurnaroundTime(data));
 
     }
+    public static double getAverageWaitingTime(List<Process> data){
+        double sum = 0;
+        for (Process cur : data) sum+=cur.getWaitingTime();
+        return sum/data.size();
+    }
+    public static double getAverageTurnaroundTime(List<Process> data){
+        double sum = 0;
+        for (Process cur : data) sum+=cur.getTurnaroundTime();
+        return sum/data.size();
+    }
 }
+//Queue.add(new Process("1",1,7));
+//Queue.add(new Process("2",3,3));
+//Queue.add(new Process("3",6,2));
+//Queue.add(new Process("4",7,10));
+//Queue.add(new Process("5",9,8));
+//------------------------------------
+// NO CONTEXT SWITCH
+//Queue.add(new Process("1",0,8));
+//Queue.add(new Process("2",1,4));
+//Queue.add(new Process("3",2,2));
+//Queue.add(new Process("4",3,1));
+//Queue.add(new Process("5",4,3));
+//Queue.add(new Process("6",5,2));
+//--------------------------------------

@@ -18,6 +18,10 @@ public class AGScheduling extends ProcessScheduling {
     @Override
     void EnterData() {
         Queue = new ArrayList<>();
+        Queue.add(new Process("a",0,17,4,4));
+        Queue.add(new Process("b",3,6,9,4));
+        Queue.add(new Process("c",4,10,3,4));
+        Queue.add(new Process("d",29,4,8,4));
         /*Scanner in = new Scanner(System.in);
         System.out.println("Enter the Quantum of processes");
         Quantum = in.nextInt();
@@ -35,13 +39,6 @@ public class AGScheduling extends ProcessScheduling {
             Queue.add(new Process(Name, arrival, burst,priority,Quantum));
             System.out.println("Process " + i + " is added successfully\n");
         }*/
-        TestCase();
-    }
-    private void TestCase(){
-        Queue.add(new Process("a",0,17,4,4));
-        Queue.add(new Process("b",3,6,9,4));
-        Queue.add(new Process("c",4,10,3,4));
-        Queue.add(new Process("d",29,4,8,4));
     }
     @Override
     public List<Process> Simulate() throws Exception {

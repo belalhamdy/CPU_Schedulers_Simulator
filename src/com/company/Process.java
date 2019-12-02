@@ -11,7 +11,7 @@ import java.util.Queue;
 // Depending on type of simulation choose constructor
 public class Process {
     String Name;
-    int ArrivalTime, BurstTime, RemainingTime, Priority, Quantum,tempQuantum, AGFacor,id;
+    int ArrivalTime, BurstTime, RemainingTime, Priority, Quantum,tempQuantum, AGFacor,id , Context_Switch;
     List<Pair<Integer,Integer>> QuantumHistory;
     Color color;
     List<Pair<Integer, Integer>> WorkingTimes;
@@ -28,12 +28,13 @@ public class Process {
         WorkingTimes = new ArrayList<>();
         RemainingTime = BurstTime;
         this.id = ++LastPID;
+        this.Context_Switch = 0;
 
     }
 
     @Override
     public String toString() {
-        return this.Name +" "+ this.ArrivalTime +" "+ this.BurstTime +" " +" " + this.getStartTime()+" "+this.getEndTime();
+        return this.Name +" "+ this.ArrivalTime +" "+ this.BurstTime +" " +this.Priority+" " + this.getStartTime()+" "+this.getEndTime() + " "+ this.getWaitingTime();
     }
 
     Process(String Name, int ArrivalTime, int BurstTime) {
@@ -66,11 +67,11 @@ public class Process {
     }
 
     public int getWaitingTime() {
-        return (getEndTime() - ArrivalTime - BurstTime);
+        return getTurnaroundTime() - BurstTime;
     }
 
     public int getTurnaroundTime() {
-        return (getEndTime() - ArrivalTime);
+        return (getEndTime() - ArrivalTime) + Context_Switch;
     }
 
     int getEndTime() {
@@ -92,5 +93,8 @@ public class Process {
     }
     public void UpdateQuantum() throws Exception{
         UpdateQuantum(WorkingTimes.get(0).getKey(),WorkingTimes.get(WorkingTimes.size() - 1).getValue());
+    }
+    public void AddContext(int amount){
+        Context_Switch+=amount;
     }
 }
