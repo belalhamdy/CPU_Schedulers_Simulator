@@ -57,7 +57,7 @@ public class Process {
     }
 
     public void AddWorkingTime(int start, int end) throws Exception {
-        WorkingTimes.add(new Pair<>(start, end));
+        WorkingTimes.add(new Pair<>(start, end+Context_Switch));
         RemainingTime -= (end - start);
         if (RemainingTime < 0) throw new Exception("This process took working time larger than it's burst time");
     }
@@ -71,7 +71,7 @@ public class Process {
     }
 
     public int getTurnaroundTime() {
-        return (getEndTime() - ArrivalTime) + Context_Switch;
+        return (getEndTime() - ArrivalTime) ;
     }
 
     int getEndTime() {
@@ -94,7 +94,7 @@ public class Process {
     public void UpdateQuantum() throws Exception{
         UpdateQuantum(WorkingTimes.get(0).getKey(),WorkingTimes.get(WorkingTimes.size() - 1).getValue());
     }
-    public void AddContext(int amount){
-        Context_Switch+=amount;
+    public void setContext_Switch(int amount){
+        Context_Switch=amount;
     }
 }

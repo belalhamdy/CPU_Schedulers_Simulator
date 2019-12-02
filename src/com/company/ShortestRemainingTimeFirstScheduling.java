@@ -18,6 +18,7 @@ public class ShortestRemainingTimeFirstScheduling extends ProcessScheduling {
 
     @Override
     public List<Process> Simulate() throws Exception {
+        for (Process curr : Queue) curr.setContext_Switch(CONTEXT_SWITCH);
         List<Process> finished = new ArrayList<>();
         int currentTime = 0, nextStop;
         Process current = null;
@@ -32,7 +33,6 @@ public class ShortestRemainingTimeFirstScheduling extends ProcessScheduling {
             nextStop = Math.min(getNextArrival(currentTime) + CONTEXT_SWITCH, currentTime + current.RemainingTime + CONTEXT_SWITCH);
             if (nextStop < currentTime) nextStop = currentTime + current.RemainingTime;
             current.AddWorkingTime(currentTime, nextStop-CONTEXT_SWITCH );
-            current.AddContext(CONTEXT_SWITCH);
             currentTime = nextStop;
         }
         if (current != null) finished.add(current);

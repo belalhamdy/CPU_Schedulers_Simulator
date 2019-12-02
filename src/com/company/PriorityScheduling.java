@@ -18,13 +18,22 @@ public class PriorityScheduling extends ProcessScheduling {
     @Override
      void EnterData() {
         Queue = new ArrayList<>();
-        /*Queue.add(new Process("STARVING_2",0,7,5));
+        /*
+        Queue.add(new Process("STARVING_2",0,7,5));
         Queue.add(new Process("1",0,11,2));
         Queue.add(new Process("2",5,28,0));
         Queue.add(new Process("3",12,2,3));
         Queue.add(new Process("4",2,10,1));
         Queue.add(new Process("STARVING_1",9,16,4));
-        Queue.add(new Process("6",60,16,2));*/
+        Queue.add(new Process("6",60,16,2));
+        */
+        /*
+        Queue.add(new Process("1",0,10,3));
+        Queue.add(new Process("2",0,1,1));
+        Queue.add(new Process("3",0,2,4));
+        Queue.add(new Process("4",0,1,5));
+        Queue.add(new Process("5",0,5,2));
+        //*/
         Scanner in = new Scanner(inputStream);
         System.out.print("Enter number of processes: ");
         int n = in.nextInt();
