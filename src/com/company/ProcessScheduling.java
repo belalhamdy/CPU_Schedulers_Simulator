@@ -69,13 +69,13 @@ public abstract class ProcessScheduling {
     public double getAverageWaitingTime(List<Process> data){
         double sum = 0;
         for (Process cur : data) sum+=cur.getWaitingTime();
-        return Double.parseDouble(doubleFormat.format(sum/data.size()));
+        return Double.parseDouble(doubleFormat.format(Math.abs(sum)/data.size()));
         //return sum/data.size();
     }
     public double getAverageTurnaroundTime(List<Process> data){
         double sum = 0;
         for (Process cur : data) sum+=cur.getTurnaroundTime();
-        return Double.parseDouble(doubleFormat.format(sum/data.size()));
+        return Double.parseDouble(doubleFormat.format(Math.abs(sum)/data.size()));
         //return sum/data.size();
     }
 }

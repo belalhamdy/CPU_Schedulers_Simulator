@@ -6,7 +6,7 @@ import static com.company.ProcessComparator.ComparisonType.*;
 
 public class ProcessComparator implements Comparator<Process> {
 
-    public enum ComparisonType {ArrivalTime,BurstTime,Priority,RemainingTime,Quantum}
+    public enum ComparisonType {ArrivalTime,BurstTime,Priority,RemainingTime,AG}
     private ComparisonType Type;
     private int comparisonParameter;
     ProcessComparator(ComparisonType Type,int comparisonParameter){
@@ -25,13 +25,13 @@ public class ProcessComparator implements Comparator<Process> {
         else if (Type == BurstTime) return BurstTimeCompare(o1,o2);
         else if (Type == Priority) return PriorityCompare(o1,o2);
         else if (Type == RemainingTime) return RemainingTimeCompare(o1,o2);
-        else if (Type == Quantum) return QuantumCompare(o1,o2);
+        else if (Type == AG) return AGCompare(o1,o2);
         else return 0;
     }
 
-    private int QuantumCompare(Process a, Process b) {
-        if (a.ArrivalTime > comparisonParameter || b.ArrivalTime > comparisonParameter || a.Priority == b.Priority) return ArrivalTimeCompare(a,b);
-        return Integer.compare(a.Quantum,b.Quantum);
+    private int AGCompare(Process a, Process b) {
+        if (a.ArrivalTime > comparisonParameter || b.ArrivalTime > comparisonParameter || a.AGFactor == b.AGFactor) return ArrivalTimeCompare(a,b);
+        return Integer.compare(a.AGFactor,b.AGFactor);
     }
 
     private int ArrivalTimeCompare(Process a, Process b){
