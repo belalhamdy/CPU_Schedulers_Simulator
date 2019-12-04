@@ -90,6 +90,8 @@ public class Main {
         System.out.println("Enter application name : ");
         String name = in.nextLine();
         GanttChart chart = null;
+        QuantumHistory history = null;
+        ProcessesStat stat = null;
         List<Process> Result = null;
         ProcessScheduling simulator;
         loop:
@@ -122,13 +124,19 @@ public class Main {
             }
             System.out.println("-----------------------------------------------");
             if (Result != null) {
+
                 if (chart != null) chart.close();
+                if (stat != null) stat.close();
+                if (history != null) history.close();
+                stat = new ProcessesStat(Result);
+                stat.plot();
                 chart = new GanttChart(name, Result);
                 chart.plot();
                 if (c == 4){
-                    QuantumHistory history = new QuantumHistory(Result);
+                    history = new QuantumHistory(Result);
                     history.plot();
                 }
+                stat.showAverages();
             }
 
         }

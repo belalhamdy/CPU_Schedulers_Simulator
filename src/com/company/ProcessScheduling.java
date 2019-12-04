@@ -12,7 +12,7 @@ Every child class can fill the queue either by getting a list from somewhere or 
 system out is used implicitly inside the classes without declaring an output stream for them for future gui purpose
  */
 public abstract class ProcessScheduling {
-    DecimalFormat doubleFormat;
+    static DecimalFormat doubleFormat;
 
     InputStream inputStream;
     List<Process> Queue;
@@ -66,13 +66,13 @@ public abstract class ProcessScheduling {
         System.out.println("Average turnaround time : " + getAverageTurnaroundTime(data));
 
     }
-    public double getAverageWaitingTime(List<Process> data){
+    public static double getAverageWaitingTime(List<Process> data){
         double sum = 0;
         for (Process cur : data) sum+=cur.getWaitingTime();
         return Double.parseDouble(doubleFormat.format(Math.abs(sum)/data.size()));
         //return sum/data.size();
     }
-    public double getAverageTurnaroundTime(List<Process> data){
+    public static double getAverageTurnaroundTime(List<Process> data){
         double sum = 0;
         for (Process cur : data) sum+=cur.getTurnaroundTime();
         return Double.parseDouble(doubleFormat.format(Math.abs(sum)/data.size()));

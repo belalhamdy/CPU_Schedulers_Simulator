@@ -4,19 +4,23 @@ import javafx.util.Pair;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.StandardChartTheme;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.DateTickUnit;
 import org.jfree.chart.axis.DateTickUnitType;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.AbstractRenderer;
+import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.CategoryItemRenderer;
+import org.jfree.chart.renderer.category.StandardBarPainter;
 import org.jfree.data.gantt.GanttCategoryDataset;
 import org.jfree.data.gantt.Task;
 import org.jfree.data.gantt.TaskSeries;
 import org.jfree.data.gantt.TaskSeriesCollection;
 import org.jfree.data.time.SimpleTimePeriod;
 import org.jfree.ui.ApplicationFrame;
+import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.RefineryUtilities;
 
 import java.awt.*;
@@ -96,6 +100,36 @@ public class GanttChart extends ApplicationFrame {
         for (int i = 0; i < processes.size(); ++i) {
             renderer.setSeriesPaint(i, processes.get(i).color);
         }
+
+        /*StandardChartTheme theme = (StandardChartTheme)org.jfree.chart.StandardChartTheme.createJFreeTheme();
+        String fontName = "Arial";
+        theme.setTitlePaint( Color.decode( "#4572a7" ) );
+        theme.setExtraLargeFont( new Font(fontName,Font.PLAIN, 16) ); //title
+        theme.setLargeFont( new Font(fontName,Font.BOLD, 15)); //axis-title
+        theme.setRegularFont( new Font(fontName,Font.PLAIN, 11));
+        theme.setRangeGridlinePaint( Color.decode("#C0C0C0"));
+        theme.setPlotBackgroundPaint( Color.white );
+        theme.setChartBackgroundPaint( Color.white );
+        theme.setGridBandPaint( Color.red );
+        theme.setAxisOffset( new RectangleInsets(0,0,0,0) );
+        theme.setBarPainter(new StandardBarPainter());
+        theme.setAxisLabelPaint( Color.decode("#666666")  );
+        theme.apply( chart );
+        chart.getCategoryPlot().setOutlineVisible( false );
+        chart.getCategoryPlot().getRangeAxis().setAxisLineVisible( false );
+        chart.getCategoryPlot().getRangeAxis().setTickMarksVisible( false );
+        chart.getCategoryPlot().setRangeGridlineStroke( new BasicStroke() );
+        chart.getCategoryPlot().getRangeAxis().setTickLabelPaint( Color.decode("#666666") );
+        chart.getCategoryPlot().getDomainAxis().setTickLabelPaint( Color.decode("#666666") );
+        chart.setTextAntiAlias( true );
+        chart.setAntiAlias( true );
+        //chart.getCategoryPlot().getRenderer().setSeriesPaint( 0, Color.decode( "#4572a7" ));
+        BarRenderer rend = (BarRenderer) chart.getCategoryPlot().getRenderer();
+        rend.setShadowVisible( true );
+        rend.setShadowXOffset( 2 );
+        rend.setShadowYOffset( 0 );
+        rend.setShadowPaint( Color.decode( "#C0C0C0"));
+        rend.setMaximumBarWidth( 0.1);*/
         return chart;
     }
 
