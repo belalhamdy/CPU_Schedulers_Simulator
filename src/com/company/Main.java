@@ -125,6 +125,10 @@ public class Main {
                 if (chart != null) chart.close();
                 chart = new GanttChart(name, Result);
                 chart.plot();
+                if (c == 4){
+                    QuantumHistory history = new QuantumHistory(Result);
+                    history.plot();
+                }
             }
 
         }
