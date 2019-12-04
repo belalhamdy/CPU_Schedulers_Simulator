@@ -28,6 +28,11 @@ public class Process {
         RemainingTime = BurstTime;
         this.id = ++LastPID;
         this.Context_Switch = 0;
+        if (Quantum != -1){
+            AGFactor = ArrivalTime + BurstTime + Priority;
+            QuantumHistory = new ArrayList<>();
+            QuantumHistory.add(new Pair<>(0,Quantum));
+        }
 
     }
 
@@ -43,12 +48,17 @@ public class Process {
     Process(String Name, int ArrivalTime, int BurstTime, int Priority) {
         this(Name, ArrivalTime, BurstTime, Priority, -1, Color.BLACK);
     }
+    Process(String Name, int ArrivalTime, int BurstTime , Color color) {
+        this(Name, ArrivalTime, BurstTime, -1, -1, color);
+    }
+
+    Process(String Name, int ArrivalTime, int BurstTime, int Priority,Color color) {
+        this(Name, ArrivalTime, BurstTime, Priority, -1, color);
+    }
 
     Process(String Name, int ArrivalTime, int BurstTime, int Priority, int Quantum) {
         this(Name, ArrivalTime, BurstTime, Priority, Quantum, Color.BLACK);
-        AGFactor = ArrivalTime + BurstTime + Priority;
-        QuantumHistory = new ArrayList<>();
-        QuantumHistory.add(new Pair<>(0,Quantum));
+
     }
 
     public List<Pair<Integer, Integer>> getWorkingTimes() {
