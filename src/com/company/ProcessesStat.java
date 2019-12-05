@@ -3,6 +3,7 @@ package com.company;
 import org.jfree.ui.ApplicationFrame;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.WindowEvent;
@@ -21,17 +22,28 @@ public class ProcessesStat extends ApplicationFrame {
 
     }
     void plot(){
-        String[] cols = {"Process ID","Process Name","Arrival Time", "Burst Time","Start Time" , "End Time" , "Waiting Time" , "COLOR"};
+        String[] cols = {"Process ID","Process Name","Arrival Time", "Burst Time","Start Time" , "End Time" , "Waiting Time"};
         DefaultTableModel model = new DefaultTableModel(cols,0);
         JTable table = new JTable(model);
         for (Process curr : processes){
-            model.addRow(new Object[]{curr.id,curr.Name,curr.ArrivalTime,curr.BurstTime,curr.getStartTime(),curr.getEndTime(),curr.getWaitingTime(),curr.color});
+            model.addRow(new Object[]{curr.id,curr.Name,curr.ArrivalTime,curr.BurstTime,curr.getStartTime(),curr.getEndTime(),curr.getWaitingTime()});
         }
         table.setAutoCreateRowSorter(true);
+
+        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer()
+        {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
+            {
+                final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                c.setBackground(row >= processes.size() ? Color.LIGHT_GRAY : processes.get(row).color);
+                return c;
+            }
+        });
         JScrollPane scrollPane = new JScrollPane(table);
         table.setFillsViewportHeight(true);
         JLabel lblHeading = new JLabel(getTitle());
-        lblHeading.setFont(new Font("Arial",Font.TRUETYPE_FONT,24));
+        lblHeading.setFont(new Font("Arial", Font.PLAIN,24));
 
         this.getContentPane().setLayout(new BorderLayout());
 
