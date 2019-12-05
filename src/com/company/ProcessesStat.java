@@ -22,11 +22,11 @@ public class ProcessesStat extends ApplicationFrame {
 
     }
     void plot(){
-        String[] cols = {"Process ID","Process Name","Arrival Time", "Burst Time","Start Time" , "End Time" , "Waiting Time"};
+        String[] cols = {"Process ID","Process Name","Arrival Time", "Burst Time","Start Time" , "End Time" , "Waiting Time", "Turnaround Time"};
         DefaultTableModel model = new DefaultTableModel(cols,0);
         JTable table = new JTable(model);
         for (Process curr : processes){
-            model.addRow(new Object[]{curr.id,curr.Name,curr.ArrivalTime,curr.BurstTime,curr.getStartTime(),curr.getEndTime(),curr.getWaitingTime()});
+            model.addRow(new Object[]{curr.id,curr.Name,curr.ArrivalTime,curr.BurstTime,curr.getStartTime(),curr.getEndTime(),curr.getWaitingTime() ,curr.getTurnaroundTime()});
         }
         table.setAutoCreateRowSorter(true);
 

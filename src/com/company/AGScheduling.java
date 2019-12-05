@@ -29,10 +29,10 @@ public class AGScheduling extends ProcessScheduling {
         Queue.add(new Process("3", 4, 10, 3, 4,Color.cyan));
         Queue.add(new Process("4", 29, 4, 8, 4,Color.pink));
         */
-        Queue.add(new Process("1", 2, 17, 14, 4, Color.MAGENTA));
+        Queue.add(new Process("1", 0, 17, 14, 4, Color.MAGENTA));
         Queue.add(new Process("2", 3, 6, 19, 4,Color.YELLOW));
         Queue.add(new Process("3", 4, 10, 13, 4,Color.cyan));
-        Queue.add(new Process("4", 7, 4, 17, 4,Color.pink));
+        Queue.add(new Process("4", 21, 4, 1, 4,Color.pink));
         /*Scanner in = new Scanner(System.in);
         System.out.println("Enter the Quantum of processes");
         Quantum = in.nextInt();
