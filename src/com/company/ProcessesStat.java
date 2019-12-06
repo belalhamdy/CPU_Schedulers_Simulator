@@ -41,6 +41,7 @@ public class ProcessesStat extends ApplicationFrame {
             }
         });
         JScrollPane scrollPane = new JScrollPane(table);
+
         table.setFillsViewportHeight(true);
         JLabel lblHeading = new JLabel(getTitle());
         lblHeading.setFont(new Font("Arial", Font.PLAIN,24));
@@ -48,21 +49,21 @@ public class ProcessesStat extends ApplicationFrame {
         this.getContentPane().setLayout(new BorderLayout());
 
         this.getContentPane().add(lblHeading,BorderLayout.PAGE_START);
+        JTextArea textArea = new JTextArea();
+        textArea.setText("Average Waiting Time = " + AverageWaiting + "\nAverage Turnaround Time = " + AverageTurn);
+        textArea.setEditable(false);
+        textArea.setVisible(true);
+        this.getContentPane().add(textArea,BorderLayout.PAGE_END);
         this.getContentPane().add(scrollPane,BorderLayout.CENTER);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        this.setSize(550, 200);
+        this.setSize(900, 200);
         this.setVisible(true);
+        this.setResizable(false);
     }
     void close(){
         this.setVisible(false);
         this.dispose();
         //this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-
-    }
-    void showAverages()
-    {
-        String infoMessage = "Average Waiting Time = " + AverageWaiting + "\nAverage Turnaround Time = " + AverageTurn;
-        JOptionPane.showMessageDialog(null, infoMessage, "Averages", JOptionPane.PLAIN_MESSAGE);
 
     }
 }

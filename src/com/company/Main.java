@@ -87,6 +87,7 @@ public class Main {
  }*/ static Scanner in = new Scanner(System.in);
 
     public static void main(String[] args) {
+
         System.out.println("Enter application name : ");
         String name = in.nextLine();
         GanttChart chart = null;
@@ -136,7 +137,6 @@ public class Main {
                     history = new QuantumHistory(Result);
                     history.plot();
                 }
-                stat.showAverages();
             }
 
         }
