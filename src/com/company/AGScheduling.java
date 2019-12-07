@@ -77,9 +77,6 @@ public class AGScheduling extends ProcessScheduling {
                     RoundRobin.add(current);
                 }
             }
-            if (currentTime == 21){
-                System.out.println("ho");
-            }
             current = nextProcess;
             Pair<Process, Integer> nextStartData = findSuitable(currentTime, current);
 
