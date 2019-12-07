@@ -23,6 +23,7 @@ import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.RefineryUtilities;
 
+import javax.swing.*;
 import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -41,11 +42,11 @@ public class GanttChart extends ApplicationFrame {
         int minTimeTemp = processes.get(0).getStartTime();
         for (Process curr : processes) {
             maxTimeTemp = Math.max(maxTimeTemp, curr.getEndTime());
-            minTimeTemp = Math.max(minTimeTemp, curr.getStartTime());
+            minTimeTemp = Math.min(minTimeTemp, curr.getStartTime());
         }
 
         maximumTime = maxTimeTemp + 1;
-        minimumTime = Math.min(minTimeTemp - 1, 1);
+        minimumTime = Math.max(minTimeTemp - 1, 0);
 
         Collections.sort(processes, new ProcessComparator(ProcessComparator.ComparisonType.ID));
     }
@@ -60,6 +61,7 @@ public class GanttChart extends ApplicationFrame {
         this.pack();
         RefineryUtilities.centerFrameOnScreen(this);
         this.setVisible(true);
+        this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     }
 
     private GanttCategoryDataset getDataset() {

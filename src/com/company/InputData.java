@@ -112,6 +112,7 @@ public class InputData {
     }
 
     private void endSimulation() {
+        clearAll();
         if (chart != null) chart.close();
         if (stat != null) stat.close();
         if (history != null) history.close();
@@ -122,12 +123,16 @@ public class InputData {
     void clearAll(){
         queue.clear();
 
+        resetVariables();
 
         DefaultTableModel tblmodel = new DefaultTableModel(null, new String[]{"ID", "Name", "Arrival Time" ,"Burst Time", "Priority", "Quantum", "AG Factor"});
         queueTbl.setModel(tblmodel);
 
         simulateButton.setEnabled(true);
         endSimulationButton.setEnabled(false);
+
+        simulationType.setSelectedIndex(0);
+        colorcbx.setSelectedIndex(0);
 
     }
     void resetVariables(){
@@ -198,7 +203,6 @@ public class InputData {
                 history.plot();
             }
         }
-        clearAll();
         simulateButton.setEnabled(false);
         endSimulationButton.setEnabled(true);
     }

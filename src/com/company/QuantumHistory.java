@@ -28,7 +28,7 @@ public class QuantumHistory extends ApplicationFrame {
         lblHeading.setFont(new Font("Arial", Font.PLAIN,24));
         this.getContentPane().setLayout(new BorderLayout());
         this.getContentPane().add(lblHeading,BorderLayout.PAGE_START);
-        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.setDefaultCloseOperation(this.DO_NOTHING_ON_CLOSE);
         this.setSize(550, 350);
         this.setVisible(true);
         this.getContentPane().add(pane, BorderLayout.CENTER);
