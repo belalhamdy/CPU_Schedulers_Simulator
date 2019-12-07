@@ -1,5 +1,6 @@
 package com.company;
 
+import java.awt.*;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -17,7 +18,8 @@ public abstract class ProcessScheduling {
     InputStream inputStream;
     List<Process> Queue;
     int currentTime;
-    ProcessScheduling(InputStream inputStream,List<Process> Queue){
+
+    ProcessScheduling(InputStream inputStream, List<Process> Queue) {
         this.inputStream = inputStream;
         this.Queue = Queue;
         if (this.Queue == null) {
@@ -25,24 +27,24 @@ public abstract class ProcessScheduling {
             EnterData();
         }
         currentTime = 0;
-        this.doubleFormat =new DecimalFormat("#.###");
+        this.doubleFormat = new DecimalFormat("#.###");
     }
+
     ProcessScheduling(InputStream inputStream) {
-        this(inputStream,null);
+        this(inputStream, null);
     }
 
     ProcessScheduling(List<Process> data) {
-        this(null,data);
+        this(null, data);
     }
+
     // Default data input for shortest job first and shortest remaining time first
-     void EnterData(){
-         Queue = new ArrayList<>();
-         Queue.add(new Process("1",0,8));
-         Queue.add(new Process("2",1,4));
-         Queue.add(new Process("3",2,2));
-         Queue.add(new Process("4",3,1));
-         Queue.add(new Process("5",4,3));
-         Queue.add(new Process("6",5,2));
+    void EnterData() {
+        Queue = new ArrayList<>();
+        Queue.add(new Process("1",0,5, Color.cyan));
+        Queue.add(new Process("2",2,4,Color.LIGHT_GRAY));
+        Queue.add(new Process("3",4,3,Color.YELLOW));
+        Queue.add(new Process("4",6,6,Color.BLUE));
          /*
          Scanner in = new Scanner(inputStream);
          System.out.print("Enter number of processes: ");
@@ -57,39 +59,46 @@ public abstract class ProcessScheduling {
              Queue.add(new Process(Name, arrival, burst));
              System.out.println("Process " + i + " is added successfully\n");
          }*/
-     }
+    }
 
     public abstract List<Process> Simulate() throws Exception; // should return list of process each process contains list of working times
+
     public void PrintProcessList(List<Process> data) {
         for (Process curr : data) System.out.println(curr);
         System.out.println("Average waiting time : " + getAverageWaitingTime(data));
         System.out.println("Average turnaround time : " + getAverageTurnaroundTime(data));
 
     }
-    public static double getAverageWaitingTime(List<Process> data){
+
+    public static double getAverageWaitingTime(List<Process> data) {
         double sum = 0;
-        for (Process cur : data) sum+=cur.getWaitingTime();
-        return Double.parseDouble(doubleFormat.format(Math.abs(sum)/data.size()));
+        for (Process cur : data) sum += cur.getWaitingTime();
+        return Double.parseDouble(doubleFormat.format(Math.abs(sum) / data.size()));
         //return sum/data.size();
     }
-    public static double getAverageTurnaroundTime(List<Process> data){
+
+    public static double getAverageTurnaroundTime(List<Process> data) {
         double sum = 0;
-        for (Process cur : data) sum+=cur.getTurnaroundTime();
-        return Double.parseDouble(doubleFormat.format(Math.abs(sum)/data.size()));
+        for (Process cur : data) sum += cur.getTurnaroundTime();
+        return Double.parseDouble(doubleFormat.format(Math.abs(sum) / data.size()));
         //return sum/data.size();
     }
 }
-//Queue.add(new Process("1",1,7));
-//Queue.add(new Process("2",3,3));
-//Queue.add(new Process("3",6,2));
-//Queue.add(new Process("4",7,10));
-//Queue.add(new Process("5",9,8));
+//Queue.add(new Process("1", 1, 7, Color.cyan));
+//Queue.add(new Process("2", 3, 3,Color.LIGHT_GRAY));
+//Queue.add(new Process("3", 6, 2,Color.YELLOW));
+//Queue.add(new Process("4", 7, 10,Color.BLUE));
+//Queue.add(new Process("5", 9, 8,Color.green));
 //------------------------------------
 // NO CONTEXT SWITCH
-//Queue.add(new Process("1",0,8));
-//Queue.add(new Process("2",1,4));
-//Queue.add(new Process("3",2,2));
-//Queue.add(new Process("4",3,1));
-//Queue.add(new Process("5",4,3));
-//Queue.add(new Process("6",5,2));
+//Queue.add(new Process("1",0,8,Color.green));
+//Queue.add(new Process("2",1,4,Color.YELLOW));
+//Queue.add(new Process("3",2,2,Color.pink));
+//Queue.add(new Process("4",3,1,Color.RED));
+//Queue.add(new Process("5",4,3,Color.orange));
+//Queue.add(new Process("6",5,2,Color.cyan));
 //--------------------------------------
+//Queue.add(new Process("1",1,6, Color.cyan));
+//Queue.add(new Process("2",1,8,Color.LIGHT_GRAY));
+//Queue.add(new Process("3",2,7,Color.YELLOW));
+//Queue.add(new Process("4",3,3,Color.BLUE));

@@ -14,6 +14,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,7 +89,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        System.out.println("Enter application name : ");
+        /*System.out.println("Enter application name : ");
         String name = in.nextLine();
         GanttChart chart = null;
         QuantumHistory history = null;
@@ -140,7 +141,13 @@ public class Main {
             }
 
         }
-        System.out.println("Program Ended");
+        System.out.println("Program Ended");*/
+
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception ignored) {
+        }
+        InputData mainForm = new InputData();
 
     }
 }

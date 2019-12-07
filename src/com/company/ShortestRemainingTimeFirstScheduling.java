@@ -30,7 +30,7 @@ public class ShortestRemainingTimeFirstScheduling extends ProcessScheduling {
             Collections.sort(Queue, new ProcessComparator(ProcessComparator.ComparisonType.RemainingTime, currentTime));
             current = Queue.remove(0);
             currentTime = Math.max(current.ArrivalTime, currentTime); // update the time to be the time of start of the next process
-            nextStop = Math.min(getNextArrival(currentTime) + CONTEXT_SWITCH, currentTime + current.RemainingTime + CONTEXT_SWITCH);
+            nextStop = Math.min(getNextArrival(currentTime,current.RemainingTime) + CONTEXT_SWITCH, currentTime + current.RemainingTime + CONTEXT_SWITCH);
             if (nextStop < currentTime) nextStop = currentTime + current.RemainingTime;
             current.AddWorkingTime(currentTime, nextStop-CONTEXT_SWITCH );
             currentTime = nextStop;
@@ -38,9 +38,9 @@ public class ShortestRemainingTimeFirstScheduling extends ProcessScheduling {
         if (current != null) finished.add(current);
         return finished;
     }
-    int getNextArrival(int currentTime){
+    int getNextArrival(int currentTime,int rem){
         for (Process curr : Queue){
-            if (curr.ArrivalTime>currentTime) return curr.ArrivalTime;
+            if (curr.ArrivalTime>currentTime && curr.RemainingTime<(rem - (curr.ArrivalTime - currentTime))) return curr.ArrivalTime;
         }
         return Integer.MAX_VALUE-CONTEXT_SWITCH-1; // OVERFLOW
     }
