@@ -87,7 +87,7 @@ public class Main {
 
  }*/ static Scanner in = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         /*System.out.println("Enter application name : ");
         String name = in.nextLine();
@@ -142,7 +142,7 @@ public class Main {
 
         }
         System.out.println("Program Ended");*/
-
+        new AGScheduling(System.in).Simulate();
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception ignored) {

@@ -75,12 +75,12 @@ public class AGScheduling extends ProcessScheduling {
                     int amount = getNewQuantum(current.Quantum, duration,nextProcess);
                     current.setQuantum(amount);
                     RoundRobin.add(current);
-                }
-            }
+        }
+    }
             current = nextProcess;
             Pair<Process, Integer> nextStartData = findSuitable(currentTime, current);
-
             currentTime = Math.max(current.ArrivalTime, currentTime); // update the time to be the time of start of the next process
+
 
             nextProcess = nextStartData.getKey();
             nextStop = nextStartData.getValue();
@@ -112,7 +112,6 @@ public class AGScheduling extends ProcessScheduling {
         }
         return sum / n;
     }
-
     private Pair<Process, Integer> findSuitable(int currentTime, Process current) {
         int halfQuantum = (int) Math.ceil((double) current.Quantum / 2.0);
         int nextArriveTime = Integer.MAX_VALUE, nextRoundRobinTime = Integer.MAX_VALUE;
@@ -135,6 +134,8 @@ public class AGScheduling extends ProcessScheduling {
         }
 
         if (nextArrive != null) nextArriveTime = nextArrive.ArrivalTime;
+
+
         if (current.RemainingTime + currentTime < Math.min(nextRoundRobinTime, nextArriveTime)) {
             if (nextRoundRobinTime < nextArriveTime) {
                 RoundRobin.remove(nextRoundRobin);
