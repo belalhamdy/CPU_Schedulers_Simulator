@@ -1,5 +1,8 @@
-package com.company;
+package com.company.GUI;
 
+import com.company.Process;
+import com.company.ProcessComparator;
+import com.company.ProcessScheduling;
 import org.jfree.ui.ApplicationFrame;
 
 import javax.swing.*;

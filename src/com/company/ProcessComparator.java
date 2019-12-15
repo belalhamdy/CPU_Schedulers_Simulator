@@ -13,7 +13,7 @@ public class ProcessComparator implements Comparator<Process> {
         this.Type = Type;
         this.comparisonParameter = comparisonParameter;
     }
-   ProcessComparator(ComparisonType Type){
+   public ProcessComparator(ComparisonType Type){
        this(Type,Integer.MIN_VALUE);
    }
     // -1 -> o1 < o2

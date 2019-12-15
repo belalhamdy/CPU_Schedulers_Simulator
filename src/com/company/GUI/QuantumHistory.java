@@ -1,5 +1,7 @@
-package com.company;
+package com.company.GUI;
 
+import com.company.Process;
+import com.company.ProcessComparator;
 import com.sun.org.apache.bcel.internal.generic.JsrInstruction;
 import javafx.util.Pair;
 import org.jfree.ui.ApplicationFrame;

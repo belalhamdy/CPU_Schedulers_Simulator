@@ -1,4 +1,10 @@
-package com.company;
+package com.company.GUI;
+
+import com.company.*;
+import com.company.GUI.GanttChart;
+import com.company.GUI.ProcessesStat;
+import com.company.GUI.QuantumHistory;
+import com.company.Process;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -28,7 +34,7 @@ public class InputData {
     GanttChart chart = null;
     QuantumHistory history = null;
     ProcessesStat stat = null;
-    InputData(){
+    public InputData(){
         JFrame form = new JFrame("CPU Scheduler");
         form.setResizable(false);
 

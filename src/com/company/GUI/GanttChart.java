@@ -1,5 +1,7 @@
-package com.company;
+package com.company.GUI;
 
+import com.company.Process;
+import com.company.ProcessComparator;
 import javafx.util.Pair;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;

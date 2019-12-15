@@ -2,54 +2,17 @@ package com.company;
 
 import javafx.util.Pair;
 
-import java.awt.*;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class AGScheduling extends ProcessScheduling {
-    int Quantum;
     List<Process> RoundRobin;
+//handle process arrival after current process is processed
 
-    AGScheduling(InputStream inputStream) {
-        super(inputStream);
-    }
 
-    AGScheduling(List<Process> data) {
+    public AGScheduling(List<Process> data) {
         super(data);
-    }
-
-    @Override
-    void EnterData() {
-        Queue = new ArrayList<>();
-       /*
-       Queue.add(new Process("1", 0, 17, 4, 4, Color.MAGENTA));
-        Queue.add(new Process("2", 3, 6, 9, 4,Color.YELLOW));
-        Queue.add(new Process("3", 4, 10, 3, 4,Color.cyan));
-        Queue.add(new Process("4", 29, 4, 8, 4,Color.pink));
-        */
-        Queue.add(new Process("1", 0, 17, 14, 4, Color.MAGENTA));
-        Queue.add(new Process("2", 3, 6, 19, 4,Color.YELLOW));
-        Queue.add(new Process("3", 4, 10, 13, 4,Color.cyan));
-        Queue.add(new Process("4", 7, 4, 17, 4,Color.pink));
-        /*Scanner in = new Scanner(System.in);
-        System.out.println("Enter the Quantum of processes");
-        Quantum = in.nextInt();
-        System.out.print("Enter number of processes: ");
-        int n = in.nextInt();
-        for (int i = 1; i <= n; ++i) {
-            System.out.print("Enter Name of process " + i + " : ");
-            String Name = in.next();
-            System.out.print("Enter Arrival Time of process " + i + " : ");
-            int arrival = in.nextInt();
-            System.out.print("Enter Burst Time of process " + i + " : ");
-            int burst = in.nextInt();
-            System.out.print("Enter Priority of process " + i + " : ");
-            int priority = in.nextInt();
-            Queue.add(new Process(Name, arrival, burst,priority,Quantum));
-            System.out.println("Process " + i + " is added successfully\n");
-        }*/
     }
 
     /*
@@ -64,24 +27,13 @@ public class AGScheduling extends ProcessScheduling {
         int currentTime = 0, nextStop, duration = 0;
 
         Collections.sort(Queue, new ProcessComparator(ProcessComparator.ComparisonType.AG, currentTime));
-        Process current = null, nextProcess = Queue.remove(0);
+        Process current , nextProcess = Queue.remove(0);
+        currentTime = nextProcess.ArrivalTime;
 
         while (nextProcess != null) {
-            if (current != null) {
-                if (current.isFinished()) {
-                    finished.add(current);
-                    current.setQuantum(-current.Quantum);
-                } else {
-                    int amount = getNewQuantum(current.Quantum, duration,nextProcess);
-                    current.setQuantum(amount);
-                    RoundRobin.add(current);
-        }
-    }
             current = nextProcess;
+
             Pair<Process, Integer> nextStartData = findSuitable(currentTime, current);
-            currentTime = Math.max(current.ArrivalTime, currentTime); // update the time to be the time of start of the next process
-
-
             nextProcess = nextStartData.getKey();
             nextStop = nextStartData.getValue();
 
@@ -89,36 +41,48 @@ public class AGScheduling extends ProcessScheduling {
 
             duration = nextStop - currentTime;
             currentTime = nextStop;
+
+            if (current.isFinished()) {
+                finished.add(current);
+                current.resetQuantam();
+            } else {
+                RoundRobin.add(current);
+                int amount = getNewQuantum(current.Quantum, duration);
+                current.increaseQuantum(amount);
+            }
+
         }
 
-        if (current != null){
-            current.setQuantum(-current.Quantum);
-            finished.add(current);
-        }
         return finished;
     }
 
-    private int getNewQuantum(int oldQuantum, int duration,Process nextProcess) {
-        if (duration == oldQuantum) return (int) Math.ceil(0.1*getMeanQuantum(nextProcess));
+    private int getNewQuantum(int oldQuantum, int duration) {
+        if (duration == oldQuantum) return (int) Math.ceil(0.1 * getMeanQuantum());
         return oldQuantum - duration;
     }
 
-    private double getMeanQuantum(Process nextProcess) {
-        double sum = nextProcess.Quantum;
-        int n = 1;
+    private double getMeanQuantum() {
+        double sum = 0;
+        int n = 0;
         for (Process p : RoundRobin) {
-                sum += p.Quantum;
-                ++n;
+            sum += p.Quantum;
+            ++n;
         }
         return sum / n;
     }
+
+    private Pair<Process, Integer> findSuitableDRDR(int currentTime, Process current) {
+
+    }
+
     private Pair<Process, Integer> findSuitable(int currentTime, Process current) {
         int halfQuantum = (int) Math.ceil((double) current.Quantum / 2.0);
         int nextArriveTime = Integer.MAX_VALUE, nextRoundRobinTime = Integer.MAX_VALUE;
         Process nextArrive = null, nextRoundRobin = null;
 
         Collections.sort(Queue, new ProcessComparator(ProcessComparator.ComparisonType.AG, currentTime + halfQuantum));
-        if (Queue.isEmpty() && RoundRobin.isEmpty()) return new Pair<>(null,currentTime + current.RemainingTime);
+
+        if (Queue.isEmpty() && RoundRobin.isEmpty()) return new Pair<>(null, currentTime + current.RemainingTime);
         if (!Queue.isEmpty()) nextArrive = Queue.get(0);
 
         if (!RoundRobin.isEmpty()) {
@@ -130,7 +94,7 @@ public class AGScheduling extends ProcessScheduling {
 
         if (nextRoundRobin != null) {
             if (nextRoundRobin.AGFactor < current.AGFactor) nextRoundRobinTime = currentTime + halfQuantum;
-            else nextRoundRobinTime = currentTime + Math.min(current.Quantum,current.RemainingTime);
+            else nextRoundRobinTime = currentTime + Math.min(current.Quantum, current.RemainingTime);
         }
 
         if (nextArrive != null) nextArriveTime = nextArrive.ArrivalTime;
@@ -151,8 +115,10 @@ public class AGScheduling extends ProcessScheduling {
             } else {
                 Queue.remove(nextArrive);
                 assert nextArrive != null;
-                if (current.AGFactor< nextArrive.AGFactor)return new Pair<>(nextArrive, Math.min(currentTime + current.RemainingTime, currentTime + current.Quantum));
-                else   return new Pair<>(nextArrive, Math.min(Math.max(nextArriveTime, currentTime + halfQuantum),currentTime+current.RemainingTime));
+                if (current.AGFactor < nextArrive.AGFactor)
+                    return new Pair<>(nextArrive, Math.min(currentTime + current.RemainingTime, currentTime + current.Quantum));
+                else
+                    return new Pair<>(nextArrive, Math.min(Math.max(nextArriveTime, currentTime + halfQuantum), currentTime + current.RemainingTime));
             }
 
         }
