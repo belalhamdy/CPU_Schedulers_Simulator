@@ -1,6 +1,12 @@
 package com.company.GUI;
 
+import com.company.AGScheduling;
+import com.company.Process;
+
 import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -125,7 +131,12 @@ public class Main {
 
         }
         System.out.println("Program Ended");*/
-//        new AGScheduling(System.in).Simulate();
+//        List<Process> queue = new ArrayList<>();
+//        queue.add(new Process("1",0,17,4,4, Color.GREEN));
+//        queue.add(new Process("2",3,6,9,4, Color.CYAN));
+//        queue.add(new Process("3",4,10,3,4, Color.RED));
+//        queue.add(new Process("4",29,4,8,4, Color.MAGENTA));
+//        new AGScheduling(queue).Simulate();
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception ignored) {

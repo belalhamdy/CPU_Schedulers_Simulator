@@ -35,6 +35,7 @@ public class ProcessComparator implements Comparator<Process> {
     }
 
     private int AGCompare(Process a, Process b) {
+        if(a.ArrivalTime == b.ArrivalTime) return  Integer.compare(a.AGFactor,b.AGFactor);
         if (a.ArrivalTime > comparisonParameter || b.ArrivalTime > comparisonParameter || a.AGFactor == b.AGFactor) return ArrivalTimeCompare(a,b);
         return Integer.compare(a.AGFactor,b.AGFactor);
     }
@@ -51,6 +52,7 @@ public class ProcessComparator implements Comparator<Process> {
         return Integer.compare(a.RemainingTime,b.RemainingTime);
     }
     private int PriorityCompare(Process a,Process b){
+        if(a.ArrivalTime == b.ArrivalTime) return  Integer.compare(a.Priority,b.Priority);
         if (a.ArrivalTime > comparisonParameter || b.ArrivalTime > comparisonParameter || a.Priority == b.Priority) return ArrivalTimeCompare(a,b);
         return Integer.compare(a.Priority,b.Priority);
     }

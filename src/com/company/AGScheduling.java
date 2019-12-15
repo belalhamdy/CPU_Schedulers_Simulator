@@ -26,29 +26,37 @@ public class AGScheduling extends ProcessScheduling {
         RoundRobin = new ArrayList<>();
         int currentTime = 0, nextStop, duration = 0;
 
-        Collections.sort(Queue, new ProcessComparator(ProcessComparator.ComparisonType.AG, currentTime));
-        Process current , nextProcess = Queue.remove(0);
-        currentTime = nextProcess.ArrivalTime;
+        Process current;
+        Process nextProcess;
+        while (!Queue.isEmpty()) {
+            nextProcess = Queue.remove(0);
+            Collections.sort(Queue, new ProcessComparator(ProcessComparator.ComparisonType.AG, currentTime));
 
-        while (nextProcess != null) {
-            current = nextProcess;
+            currentTime = Math.max(currentTime, nextProcess.ArrivalTime);
+            while (nextProcess != null) {
+                current = nextProcess;
 
-            Pair<Process, Integer> nextStartData = findSuitable(currentTime, current);
-            nextProcess = nextStartData.getKey();
-            nextStop = nextStartData.getValue();
+                Queue.remove(current);
+                RoundRobin.remove(current);
 
-            current.AddWorkingTime(currentTime, nextStop);
+                Pair<Process, Integer> nextStartData = findSuitableDRDR(currentTime, current);
+                nextProcess = nextStartData.getKey();
+                nextStop = nextStartData.getValue();
 
-            duration = nextStop - currentTime;
-            currentTime = nextStop;
+                current.AddWorkingTime(currentTime, nextStop);
 
-            if (current.isFinished()) {
-                finished.add(current);
-                current.resetQuantam();
-            } else {
-                RoundRobin.add(current);
-                int amount = getNewQuantum(current.Quantum, duration);
-                current.increaseQuantum(amount);
+                duration = nextStop - currentTime;
+                currentTime = nextStop;
+
+                if (current.isFinished()) {
+                    finished.add(current);
+                    current.resetQuantam();
+                } else {
+                    RoundRobin.add(current);
+                    Queue.add(current);
+                    int amount = getNewQuantum(current.Quantum, duration);
+                    current.increaseQuantum(amount);
+                }
             }
 
         }
@@ -72,6 +80,39 @@ public class AGScheduling extends ProcessScheduling {
     }
 
     private Pair<Process, Integer> findSuitableDRDR(int currentTime, Process current) {
+        int halfQuantum = (int) Math.ceil((double) current.Quantum / 2.0);
+
+        Collections.sort(Queue, new ProcessComparator(ProcessComparator.ComparisonType.ArrivalTime, Integer.MAX_VALUE));
+
+        Process cut = null;
+        for (Process p : Queue) {
+            //for processes that arrive between current time and current time + half quantam, get the minimum AG (must be less than me)
+            if (p.ArrivalTime <= currentTime + halfQuantum && p.AGFactor < current.AGFactor && (cut == null || p.AGFactor < cut.AGFactor)) {
+                cut = p;
+            }
+            //otherwise, get the earliest that can cut me
+            if (p.ArrivalTime > currentTime + halfQuantum && cut == null && p.AGFactor < current.AGFactor) {
+                cut = p;
+                break;
+            }
+            if (p.ArrivalTime > currentTime + current.Quantum)
+                break;
+        }
+        int exitTime = Math.min(current.RemainingTime, current.Quantum) + currentTime;
+        if (cut != null) exitTime = Math.max(cut.ArrivalTime, currentTime + halfQuantum);
+
+        for (Process p : Queue) {
+            if (p == cut) continue;
+
+            if (p.ArrivalTime > currentTime && p.ArrivalTime <= exitTime)
+                RoundRobin.add(p);
+        }
+
+        if (current.RemainingTime <= halfQuantum || cut == null) {
+            return new Pair<>(RoundRobin.isEmpty() ? null : RoundRobin.get(0), exitTime);
+        } else {
+            return new Pair<>(cut, exitTime);
+        }
 
     }
 
