@@ -8,18 +8,12 @@ import java.util.List;
 
 public class AGScheduling extends ProcessScheduling {
     List<Process> RoundRobin;
-//handle process arrival after current process is processed
 
 
     public AGScheduling(List<Process> data) {
         super(data);
     }
 
-    /*
-    Assuming that if process is executing at 0, burst 10, Quantum 2 and the next will arrive at 5 it will be executed at 2 then it will stop execution and update it's quantum and return back to execution
-    Process cut if (finished it's quantum | (finished ceil 50% of it's quantum & there exists another process in the queue) | finished it's remaining time)
-    round robin contains the cut processes in order
-     */
     @Override
     public List<Process> Simulate() throws Exception {
         // Uncomment the next lines and input any thing in GUI to test the edge case
