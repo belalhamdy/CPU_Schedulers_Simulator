@@ -2,6 +2,7 @@ package com.company;
 
 import javafx.util.Pair;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,6 +23,14 @@ public class AGScheduling extends ProcessScheduling {
      */
     @Override
     public List<Process> Simulate() throws Exception {
+        // Uncomment the next lines and input any thing in GUI to test the edge case
+//        Queue.clear();
+//        Queue.add(new Process("1", 5, 1, 1, 3, Color.MAGENTA));
+//        Queue.add(new Process("2", 5, 3, 1, 3,Color.YELLOW));
+//        Queue.add(new Process("3", 2, 6, 5, 3,Color.cyan));
+//        Queue.add(new Process("4", 4, 4, 10, 3,Color.RED));
+//        Queue.add(new Process("5", 3, 4, 3, 3,Color.GREEN));
+//        Queue.add(new Process("6", 21, 3, 2, 3, Color.GRAY));
         List<Process> finished = new ArrayList<>();
         RoundRobin = new ArrayList<>();
         int currentTime = 0, nextStop, duration = 0;
@@ -29,8 +38,8 @@ public class AGScheduling extends ProcessScheduling {
         Process current;
         Process nextProcess;
         while (!Queue.isEmpty()) {
-            nextProcess = Queue.remove(0);
             Collections.sort(Queue, new ProcessComparator(ProcessComparator.ComparisonType.AG, currentTime));
+            nextProcess = Queue.remove(0);
 
             currentTime = Math.max(currentTime, nextProcess.ArrivalTime);
             while (nextProcess != null) {
@@ -99,7 +108,7 @@ public class AGScheduling extends ProcessScheduling {
                 break;
         }
         int exitTime = Math.min(current.RemainingTime, current.Quantum) + currentTime;
-        if (cut != null) exitTime = Math.max(cut.ArrivalTime, currentTime + halfQuantum);
+        if (cut != null) exitTime = Math.max(cut.ArrivalTime,Math.min(currentTime + halfQuantum,exitTime));
 
         for (Process p : Queue) {
             if (p == cut) continue;
