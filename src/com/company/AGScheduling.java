@@ -2,7 +2,6 @@ package com.company;
 
 import javafx.util.Pair;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -48,7 +47,7 @@ public class AGScheduling extends ProcessScheduling {
                 Queue.remove(current);
                 RoundRobin.remove(current);
 
-                Pair<Process, Integer> nextStartData = findSuitableDRDR(currentTime, current);
+                Pair<Process, Integer> nextStartData = findSuitable(currentTime, current);
                 nextProcess = nextStartData.getKey();
                 nextStop = nextStartData.getValue();
 
@@ -88,7 +87,7 @@ public class AGScheduling extends ProcessScheduling {
         return sum / n;
     }
 
-    private Pair<Process, Integer> findSuitableDRDR(int currentTime, Process current) {
+    private Pair<Process, Integer> findSuitable(int currentTime, Process current) {
         int halfQuantum = (int) Math.ceil((double) current.Quantum / 2.0);
 
         Collections.sort(Queue, new ProcessComparator(ProcessComparator.ComparisonType.ArrivalTime, Integer.MAX_VALUE));
@@ -123,55 +122,6 @@ public class AGScheduling extends ProcessScheduling {
             return new Pair<>(cut, exitTime);
         }
 
-    }
-
-    private Pair<Process, Integer> findSuitable(int currentTime, Process current) {
-        int halfQuantum = (int) Math.ceil((double) current.Quantum / 2.0);
-        int nextArriveTime = Integer.MAX_VALUE, nextRoundRobinTime = Integer.MAX_VALUE;
-        Process nextArrive = null, nextRoundRobin = null;
-
-        Collections.sort(Queue, new ProcessComparator(ProcessComparator.ComparisonType.AG, currentTime + halfQuantum));
-
-        if (Queue.isEmpty() && RoundRobin.isEmpty()) return new Pair<>(null, currentTime + current.RemainingTime);
-        if (!Queue.isEmpty()) nextArrive = Queue.get(0);
-
-        if (!RoundRobin.isEmpty()) {
-            nextRoundRobin = RoundRobin.get(0);
-            for (Process curr : RoundRobin) {
-                if (curr.AGFactor < current.AGFactor) nextRoundRobin = curr;
-            }
-        }
-
-        if (nextRoundRobin != null) {
-            if (nextRoundRobin.AGFactor < current.AGFactor) nextRoundRobinTime = currentTime + halfQuantum;
-            else nextRoundRobinTime = currentTime + Math.min(current.Quantum, current.RemainingTime);
-        }
-
-        if (nextArrive != null) nextArriveTime = nextArrive.ArrivalTime;
-
-
-        if (current.RemainingTime + currentTime < Math.min(nextRoundRobinTime, nextArriveTime)) {
-            if (nextRoundRobinTime < nextArriveTime) {
-                RoundRobin.remove(nextRoundRobin);
-                return new Pair<>(nextRoundRobin, current.RemainingTime + currentTime);
-            } else {
-                Queue.remove(nextArrive);
-                return new Pair<>(nextArrive, current.RemainingTime + currentTime);
-            }
-        } else {
-            if (nextRoundRobinTime < nextArriveTime) {
-                RoundRobin.remove(nextRoundRobin);
-                return new Pair<>(nextRoundRobin, nextRoundRobinTime);
-            } else {
-                Queue.remove(nextArrive);
-                assert nextArrive != null;
-                if (current.AGFactor < nextArrive.AGFactor)
-                    return new Pair<>(nextArrive, Math.min(currentTime + current.RemainingTime, currentTime + current.Quantum));
-                else
-                    return new Pair<>(nextArrive, Math.min(Math.max(nextArriveTime, currentTime + halfQuantum), currentTime + current.RemainingTime));
-            }
-
-        }
 
     }
 
