@@ -2,6 +2,7 @@ package com.company;
 
 import javafx.util.Pair;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,7 +17,7 @@ public class AGScheduling extends ProcessScheduling {
 
     @Override
     public List<Process> Simulate() throws Exception {
-        // Uncomment the next lines and input any thing in GUI to test the edge case
+//         Uncomment the next lines and input any thing in GUI to test the edge case
 //        Queue.clear();
 //        Queue.add(new Process("1", 5, 1, 1, 3, Color.MAGENTA));
 //        Queue.add(new Process("2", 5, 3, 1, 3,Color.YELLOW));
@@ -101,7 +102,7 @@ public class AGScheduling extends ProcessScheduling {
                 break;
         }
         int exitTime = Math.min(current.RemainingTime, current.Quantum) + currentTime;
-        if (cut != null) exitTime = Math.max(cut.ArrivalTime,Math.min(currentTime + halfQuantum,exitTime));
+        if (cut != null) exitTime = Math.max(cut.ArrivalTime,currentTime + Math.min(halfQuantum,current.RemainingTime));
 
         for (Process p : Queue) {
             if (p == cut) continue;
