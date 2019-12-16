@@ -26,7 +26,7 @@ public class AGScheduling extends ProcessScheduling {
 //        Queue.add(new Process("6", 21, 3, 2, 3, Color.GRAY));
         List<Process> finished = new ArrayList<>();
         RoundRobin = new ArrayList<>();
-        int currentTime = 0, nextStop, duration = 0;
+        int currentTime = 0, nextStop, duration;
 
         Process current;
         Process nextProcess;
